@@ -14,15 +14,26 @@ const poraque_event = model('poraque_event', new Schema({
         contentType: String,
         required: false
     },
-    event_working_days:{
-        type:String,
+    event_start_date:{
+        type:Date,
+        required:false
+    },
+    event_end_date:{
+        type:Date,
         required:false
     },
     event_views:{
         type:Number,
         required:false
+    },
+    event_stars:{
+        type:Double,
+        required:true
+    },
+    event_local:{
+        type:String,
+        required:true
     }
-
 },
 { collection : 'poraque_event' }
 ))
