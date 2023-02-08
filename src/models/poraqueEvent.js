@@ -33,6 +33,10 @@ const poraque_event = model('poraque_event', new Schema({
     event_local:{
         type:String,
         required:true
+    },
+    event_type:{
+        type:String,
+        required:true
     }
 },
 { collection : 'poraque_event' }
