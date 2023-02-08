@@ -1,6 +1,6 @@
 import {model, Schema} from 'mongoose'
 
-export const poraque_event = model('poraque_event', new Schema({
+const poraque_event = model('poraque_event', new Schema({
     event_title:{
         type: String,
         required:true
@@ -12,7 +12,7 @@ export const poraque_event = model('poraque_event', new Schema({
     event_img:{
         data:Buffer,
         contentType: String,
-        required: true
+        required: false
     },
     event_working_days:{
         type:String,
@@ -23,6 +23,8 @@ export const poraque_event = model('poraque_event', new Schema({
         required:false
     }
 
-}))
+},
+{ collection : 'poraque_event' }
+))
 
 export {poraque_event}
