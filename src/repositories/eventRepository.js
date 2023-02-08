@@ -9,8 +9,14 @@ export class EventRepository{
        return await event
     }
 
+    async getAllEvent(){
+        const allEvents = poraque_event.find()
+ 
+        return await allEvents
+    }
+
     async getListEvent(start, limit){
-        const listEvent = poraque_event.find
+        const listEvent = poraque_event.find()
  
         return await listEvent
     }
