@@ -27,7 +27,7 @@ const poraque_event = model('poraque_event', new Schema({
         required:false
     },
     event_stars:{
-        type:Double,
+        type:Number,
         required:true
     },
     event_local:{
