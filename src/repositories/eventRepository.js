@@ -4,26 +4,18 @@ export class EventRepository{
 
     async getEvent(id){
        const event = await poraque_event.findOne({_id:id})
-       
-
        return await event
     }
 
-    async getAllEvent(){
-        const allEvents = poraque_event.find()
- 
-        return await allEvents
+    async countEvent(){
+        const numberEvents = await poraque_event.countDocuments();
+
+        return numberEvents
     }
 
-    async getListEvent(start, limit){
-        const listEvent = poraque_event.find()
- 
-        return await listEvent
+    async getListEventsByType(start, limit, type){
+        const listEvents = poraque_event.find({event_type:`${type}`}).select({event_description:0}).sort({_id:1}).skip(start).limit(limit)
+        return await listEvents
     }
 
-    async getListHotel(start, limit){
-        const listHotel = poraque_event.findMany({_id:id})
- 
-        return await listHotel
-    }
 }
