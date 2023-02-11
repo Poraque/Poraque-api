@@ -3,11 +3,9 @@ import mongoose from 'mongoose'
 
 
 const dbConect = async (url)=>{
-    console.log(url)
+    mongoose.set('strictQuery', true)
     if(process.env.URL_DB){
-        await mongoose.connect(url).then(()=>{
-            console.log("conectado ao banco")
-        })
+        await mongoose.connect(url)
     }
 }
 
