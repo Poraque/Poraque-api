@@ -18,4 +18,10 @@ export class EventRepository{
         return await listEvents
     }
 
+    async getEventListFiltered(start, limit, query){
+        const listEvents = poraque_event.find(query).select({event_description:0}).sort({_id:1}).skip(start).limit(limit)
+
+        return await listEvents
+    }
+
 }
