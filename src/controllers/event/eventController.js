@@ -1,6 +1,5 @@
 import { isValidObjectId} from "mongoose"
-import { isAlphanumeric } from 'validator';
-
+import validator from 'validator'
 export class EventController{
     constructor(EventUseCase){
         this.eventUseCase = EventUseCase
@@ -36,7 +35,7 @@ export class EventController{
         const pageSize = req.query.pageSize ? Number(req.query.pageSize) : 10
         const type = req.query.type
         
-        if(type && !isAlphanumeric(type) || search && !isAlphanumeric(search)){
+        if(type && !validator.isAlphanumeric(type) || search && !validator.isAlphanumeric(search)){
             res.status(404).json({"error":"Not found"})
             return;
         }
