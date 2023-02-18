@@ -38,7 +38,7 @@ export class EventUseCase{
             const queryRegex = new RegExp(search, 'i');
             const eventTypeRegex = eventType ? new RegExp(eventType, 'i') :  new RegExp('')
             const page = Math.max(0, pageNumber) * itemsPerPage;
-            let limit = Math.min(itemsPerPage, 1)
+            let limit = Math.max(itemsPerPage, 1)
 
             limit =  Math.min(page + limit, MAX_ITEMS_PER_PAGE)
             
