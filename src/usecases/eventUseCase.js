@@ -8,22 +8,23 @@ export class EventUseCase{
             const start = 0
             const limit = 5 //Limite da tela de home
 
-            const listEvent = await this.eventRepository.getListEventsByType(start, limit, "Turistico") 
-            const listHotel = await this.eventRepository.getListEventsByType(start, limit, "Hotel")
-            const listFestival = await this.eventRepository.getListEventsByType(start, limit, "Festival")
-            const listFair = await this.eventRepository.getListEventsByType(start, limit, "Feira")
+            const eventTypes = ["Turistico", "Hotel", "Festival", "Feira"];
 
+            const events = [];
 
-            const listAllEvent = listEvent
-            .concat(listHotel)
-            .concat(listFestival)
-            .concat(listFair)
+            for (const eventType of eventTypes) {
             
+                const list = await this.eventRepository.getListEventsByType(start, limit, eventType);
+                
+                events.push(...list);
+            }
 
-            return listAllEvent
+            return events;
+            
         }
         catch(err){
             //Dev
+            console.log(err)
             return {'method':'getAllEvent',
                     'error': err}
             }
