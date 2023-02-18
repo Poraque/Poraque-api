@@ -2,26 +2,26 @@ import {poraque_event} from '../models/poraqueEvent.js'
 
 export class EventRepository{
 
-    async getEvent(id){
+    async getEventById(id){
        const event = await poraque_event.findOne({_id:id})
-       return await event
+       return event
     }
 
-    async countEvent(){
+    async countEvents(){
         const numberEvents = await poraque_event.countDocuments();
 
         return numberEvents
     }
 
     async getListEventsByType(start, limit, type){
-        const listEvents = poraque_event.find({event_type:`${type}`}).select({event_description:0}).sort({_id:1}).skip(start).limit(limit)
-        return await listEvents
+        const listEvents = await poraque_event.find({event_type:type}).select({event_description:0}).sort({_id:1}).skip(start).limit(limit)
+        return listEvents
     }
 
-    async getEventListFiltered(start, limit, query){
-        const listEvents = poraque_event.find(query).select({event_description:0}).sort({_id:1}).skip(start).limit(limit)
+    async searchEvents(pageNumber, ItemsPerPage, searchQuery, eventType){
+        const listEvents = await poraque_event.find({event_title:{$regex:searchQuery}, event_type:{$regex:eventType}}).select({event_description:0}).sort({_id:1}).skip(pageNumber).limit(ItemsPerPage)
 
-        return await listEvents
+        return listEvents
     }
 
 }
