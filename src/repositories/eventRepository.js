@@ -18,8 +18,21 @@ export class EventRepository{
         return listEvents
     }
 
-    async searchEvents(pageNumber, ItemsPerPage, searchQuery, eventType){
-        const listEvents = await poraque_event.find({event_title:{$regex:searchQuery}, event_type:{$regex:eventType}}).select({event_description:0}).sort({_id:1}).skip(pageNumber).limit(ItemsPerPage)
+    async searchEvents(pageNumber, ItemsPerPage, startSearchQuery, anySearchQuery, eventType){
+        const listEvents = await poraque_event
+        .find({
+            $and:[
+                {$or:[
+                    {event_title:{$regex:startSearchQuery}},
+                    {event_title:{$regex:anySearchQuery}},
+                ]},
+                    {event_type:{$regex:eventType}}
+                ]
+            })
+            .select({event_description:0})
+            .sort({event_title: 1})
+            .skip(pageNumber)
+            .limit(ItemsPerPage)
 
         return listEvents
     }

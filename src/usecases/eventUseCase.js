@@ -35,14 +35,15 @@ export class EventUseCase{
         
         try{
             const MAX_ITEMS_PER_PAGE = 20 
-            const queryRegex = new RegExp(search, 'i');
+            const startQueryRegex = new RegExp(`^${search}`, 'i');
+            const anyQueryRegex = new RegExp(`.*${search}.*`, 'i');
             const eventTypeRegex = eventType ? new RegExp(eventType, 'i') :  new RegExp('')
             const page = Math.max(0, pageNumber) * itemsPerPage;
             let limit = Math.max(itemsPerPage, 1)
 
             limit =  Math.min(page + limit, MAX_ITEMS_PER_PAGE)
             
-            const searchResult = this.eventRepository.searchEvents(page, limit, queryRegex, eventTypeRegex)
+            const searchResult = this.eventRepository.searchEvents(page, limit, startQueryRegex, anyQueryRegex, eventTypeRegex)
 
             return searchResult
         }catch(err){
