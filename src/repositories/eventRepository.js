@@ -18,15 +18,17 @@ export class EventRepository{
         return listEvents
     }
 
-    async searchEvents(pageNumber, ItemsPerPage, startSearchQuery, anySearchQuery, eventType){
+    async searchEvents(pageNumber, ItemsPerPage, anySearchQuery, eventType){
         const listEvents = await poraque_event
         .find({
             $and:[
-                {$or:[
-                    {event_title:{$regex:startSearchQuery}},
-                    {event_title:{$regex:anySearchQuery}},
-                ]},
-                    {event_type:{$regex:eventType}}
+                {
+                    event_title:{$regex:anySearchQuery}
+                },
+                {
+                    event_type:{$regex:eventType}
+                }
+                
                 ]
             })
             .select({event_description:0})
