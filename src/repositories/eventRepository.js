@@ -21,14 +21,14 @@ export class EventRepository{
     async searchEvents(pageNumber, ItemsPerPage, anySearchQuery, eventType){
         const listEvents = await poraque_event
         .find({
-            $and:[
+            $or:[
                 {
                     event_title:{$regex:anySearchQuery}
                 },
                 {
                     event_type:{$regex:eventType}
                 }
-                
+
                 ]
             })
             .select({event_description:0})
