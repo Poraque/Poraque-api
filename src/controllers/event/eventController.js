@@ -53,4 +53,18 @@ export class EventController{
         }
     }
 
+    async editEvent(req, res){
+        const id = req.params.id
+        const img = req.file
+
+        if(isValidObjectId(id)){
+            const event = await this.eventUseCase.editEvent(id, img)
+            res.status(200).json(event)
+            return;
+        }else{
+            res.status(400).json({"error":"id is not valid"})
+            return;
+        }       
+    }
+
 }
