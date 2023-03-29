@@ -3,7 +3,9 @@ import {poraque_event} from '../models/poraqueEvent.js'
 export class EventRepository{
 
     async getEventById(id){
-       const event = await poraque_event.findOne({_id:id})
+       let event = await poraque_event.findOne({_id:id})
+       console.log(event.event_img.data)
+
        return event
     }
 
@@ -35,4 +37,11 @@ export class EventRepository{
         return listEvents
     }
 
+    async editEvent(id, image){
+        const result = await poraque_event.updateOne(
+            { _id: id },
+            { $set: { event_img: image } }
+          );
+        return result;
+    }
 }
