@@ -1,3 +1,6 @@
+import sharp from 'sharp'
+import fs from 'fs'
+import path from 'path'
 export class EventUseCase{
     constructor(EventRepository){
         this.eventRepository = EventRepository
@@ -61,12 +64,45 @@ export class EventUseCase{
 
     async getEventById(id){
         try{
-            const event = this.eventRepository.getEventById(id)
-     
+            let event = this.eventRepository.getEventById(id)
+
             return event
              }catch(err){
-                 return {'method':'getEvent',
+                 return {'method':'get event',
                          'error': err}
              }
+    }
+
+    async editEvent(id, img){
+        if(img){
+            const imgPath = path.resolve(img.destination, img.filename)
+            
+            const readImage = fs.createReadStream(imgPath);
+            const resizeImage = sharp()
+            .resize({ width: 320 })
+            .jpeg();
+
+            const buffer = await readImage.pipe(resizeImage).toBuffer();  
+            fs.unlink(imgPath, (err) => {
+                if (err) {
+                  console.error(err);
+                  return;
+                }
+              });
+
+            const image = {
+                data: buffer,
+                type: img.mimetype
+            }
+
+            try{
+                const editedEvent = await this.eventRepository.editEvent(id, image)
+                return editedEvent;
+            }
+            catch(err){
+                return {'method':'edit event',
+                            'error': err}
+            }
+        }
     }
 }
